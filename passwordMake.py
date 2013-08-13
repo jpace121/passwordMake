@@ -2,6 +2,7 @@
 
 import os
 from random import randrange
+import pickle
 
 def randomWord():
 	"""find a random word from /usr/share/dict/words"""
@@ -28,8 +29,25 @@ def createPass():
 	passwd = word + number
 	return passwd
 
+def makePass():
+	"""make password and write it to password file"""
+	site = raw_input("Enter Site password is for: ")
+	description = raw_input("Enter short description of site: ")
+	passwd = createPass()
+
+	passTuple = site, description, passwd
+
+	passFile = open('passFile.pckl','r+')
+	passArray = pickle.load(passFile)
+	passFile.close()
+
+	passArray.append(passTuple)
+
+	passFile = open('passFile.pckl','w')
+	pickle.dump(passArray,passFile)
+	passFile.close()
+
 def main():
-	for i in range(0,10):
-		print createPass()
+	makePass()
 
 main()

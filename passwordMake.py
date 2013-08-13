@@ -3,18 +3,18 @@
 import os
 from random import randrange
 
-def randomName():
+def randomWord():
 	"""find a random word from /usr/share/dict/words"""
 	
-	nameFile = open('/usr/share/dict/words','r')
-	nameList = nameFile.readlines()
-	nameFile.close()
+	wordFile = open('/usr/share/dict/words','r')
+	wordList = wordFile.readlines()
+	wordFile.close()
 
-	n = randrange(len(nameList))
+	n = randrange(len(wordList))
 
-	name = nameList[n-1].rstrip().capitalize()
+	word = wordList[n-1].rstrip().capitalize()
 
-	return name
+	return word
 
 def randomHex():
 	"""find a random size random hex string"""
@@ -23,9 +23,9 @@ def randomHex():
 
 def createPass():
 	"""creates password"""
-	name = randomName()
+	word = randomWord()
 	number = randomHex()
-	passwd = name + number
+	passwd = word + number
 	return passwd
 
 def main():

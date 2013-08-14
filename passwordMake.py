@@ -4,6 +4,11 @@ import os
 from random import randrange
 import pickle
 
+"""
+TODO:
+	Make more API-ish
+"""
+
 def randomWord():
 	"""find a random word from /usr/share/dict/words"""
 	
@@ -37,17 +42,42 @@ def makePass():
 
 	passTuple = site, description, passwd
 
-	passFile = open('passFile.pckl','r+')
+	passFile = open('./passFile.pckl','r+')
 	passArray = pickle.load(passFile)
 	passFile.close()
 
 	passArray.append(passTuple)
 
-	passFile = open('passFile.pckl','w')
+	passFile = open('./passFile.pckl','w')
 	pickle.dump(passArray,passFile)
 	passFile.close()
 
-def main():
-	makePass()
+def getPass():
+	"""Gets Password from file"""
+	passFile = open('./passFile.pckl','r')
+	passArray = pickle.load(passFile)
+	passFile.close()
 
-main()
+	wantedSite = raw_input("What Site do you want the password for: ")
+
+	for passTuple in passArray:
+		print passTuple
+		if passTuple[0] == wantedSite:
+			passwd = passTuple[2]
+			break
+		else:
+			passwd = "Not Found!"
+	
+	print passwd
+
+def setup():
+	"""setup initial passsArray"""
+	passArray = []
+	passFile = open('./passFile.pckl','w')
+	pickle.dump(passArray,passFile)
+	passFile.close()
+
+#def main():
+#	makePass()
+
+#main()
